@@ -1,8 +1,17 @@
 import styled from "styled-components";
 
 export const BackgroundImage = styled.img`
-  position: "absolute";
-  left: 0;
-  top: 0;
-  height: 100vh;
+  height: calc(100vh - 4rem);
+  @media (max-width: 468px) {
+    display: none;
+  }
+`;
+
+export const ContainerLogin = styled.div`
+  background-color: #e2e6e9;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
