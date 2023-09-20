@@ -1,4 +1,5 @@
 import "../src/modules/login/styles/root.css";
+import "boxicons";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
