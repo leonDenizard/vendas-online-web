@@ -9,7 +9,7 @@ export const BackgroundImage = styled.img`
 
 export const ContainerLogin = styled.div`
   background-color: #e2e6e9;
-  width: 800px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
