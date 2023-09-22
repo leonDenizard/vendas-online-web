@@ -1,15 +1,17 @@
-import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 
-import Button from "../../../shared/buttons/button/Button";
-import Input from "../../../shared/inputs/inpput/Input";
+import Button from "../../../shared/components/buttons/button/Button";
+import Input from "../../../shared/components/inputs/inpput/Input";
+import { useRequests } from "../../../shared/hooks/useRequests";
 import { BackgroundImage } from "../styles/loginScreen.styles";
 import { ContainerLogin } from "../styles/loginScreen.styles";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { postRequest, loading } = useRequests();
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -19,21 +21,10 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    await axios({
-      method: "post",
-      url: "http://localhost:3000/auth",
-      data: {
-        email: email,
-        password: password,
-      },
-    })
-      .then((result) => {
-        alert(result.data.accessToken);
-        return result.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postRequest("http://localhost:3000/auth", {
+      email: email,
+      password: password,
+    });
   };
 
   return (
@@ -48,7 +39,9 @@ const LoginScreen = () => {
           onChange={handlePassword}
           value={password}
         />
-        <Button onClick={handleLogin}>Entrar</Button>
+        <Button loading={loading} onClick={handleLogin}>
+          Entrar
+        </Button>
         <p>
           Esqueceu sua senha? <a href="#">Recuperar senha</a>
         </p>
