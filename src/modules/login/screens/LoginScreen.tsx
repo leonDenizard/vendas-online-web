@@ -7,6 +7,7 @@ import { useGlobalContext } from "../../../shared/hooks/useGlobalContext";
 import { useRequests } from "../../../shared/hooks/useRequests";
 import { BackgroundImage } from "../styles/loginScreen.styles";
 import { ContainerLogin } from "../styles/loginScreen.styles";
+import { UserType } from "../types/UserType";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -24,11 +25,12 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    setAccessToken("novo token");
-    postRequest("http://localhost:3000/auth", {
+    const user = await postRequest<UserType>("http://localhost:3000/auth", {
       email: email,
       password: password,
     });
+
+    setAccessToken(user?.accessToken || "");
   };
 
   return (
@@ -36,7 +38,7 @@ const LoginScreen = () => {
       <BackgroundImage src="./background.png"></BackgroundImage>
       <ContainerLogin>
         <Icon className="bx bx-code-alt"></Icon>
-        <h1>({accessToken})</h1>
+        <small>({accessToken})</small>
         <Input title="Usuário:" onChange={handleEmail} value={email} />
         <Input
           type="password"
