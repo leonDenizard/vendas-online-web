@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import Button from "../../../shared/components/buttons/button/Button";
 import Input from "../../../shared/components/inputs/inpput/Input";
-import { useGlobalContext } from "../../../shared/hooks/useGlobalContext";
 import { useRequests } from "../../../shared/hooks/useRequests";
 import { BackgroundImage } from "../styles/loginScreen.styles";
 import { ContainerLogin } from "../styles/loginScreen.styles";
@@ -12,8 +11,6 @@ import { UserType } from "../types/UserType";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const { accessToken, setAccessToken } = useGlobalContext();
 
   const { postRequest, loading } = useRequests();
 
@@ -24,13 +21,11 @@ const LoginScreen = () => {
     setPassword(event.target.value);
   };
 
-  const handleLogin = async () => {
-    const user = await postRequest<UserType>("http://localhost:3000/auth", {
+  const handleLogin = () => {
+    postRequest<UserType>("http://localhost:3000/auth", {
       email: email,
       password: password,
     });
-
-    setAccessToken(user?.accessToken || "");
   };
 
   return (
@@ -38,7 +33,6 @@ const LoginScreen = () => {
       <BackgroundImage src="./background.png"></BackgroundImage>
       <ContainerLogin>
         <Icon className="bx bx-code-alt"></Icon>
-        <small>({accessToken})</small>
         <Input title="Usuário:" onChange={handleEmail} value={email} />
         <Input
           type="password"
